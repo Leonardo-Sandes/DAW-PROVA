@@ -1,10 +1,11 @@
 <?php 
 session_start();
-if (!isset($_SESSION['usuario_logado'])) {
+if (!isset($_SESSION['usuario_logado']) || $_SESSION['tipo_usuario'] != 'admin') {
     header("Location: login.php");
     exit;
 }
 require_once 'funcoes.php'; 
+
 
 $mensagem_sucesso = "";
 
