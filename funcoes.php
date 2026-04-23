@@ -31,15 +31,18 @@ function excluirPergunta($id_excluir) {
         }
     }
     file_put_contents($caminho_txt, $novas_linhas);
+
+
 }
+
 
 
 $arquivo_usuarios = 'usuarios.txt';
 
-function cadastrarUsuario($nome, $login, $senha) {
+function cadastrarUsuario($nome, $login, $senha, $tipo) {
     global $arquivo_usuarios;
     $senha_cripto = password_hash($senha, PASSWORD_DEFAULT);
-    $linha = "$nome | $login | $senha_cripto" . PHP_EOL;
+    $linha = "$nome | $login | $senha_cripto | $tipo" . PHP_EOL;
     file_put_contents($arquivo_usuarios, $linha, FILE_APPEND);
 }
 
@@ -50,8 +53,11 @@ function realizarLogin($login, $senha) {
     $usuarios = file($arquivo_usuarios, FILE_IGNORE_NEW_LINES);
     foreach ($usuarios as $linha) {
         $dados = explode(" | ", $linha);
+        
         if ($dados[1] == $login && password_verify($senha, $dados[2])) {
             $_SESSION['usuario_logado'] = $dados[0]; 
+            
+            $_SESSION['tipo_usuario'] = trim($dados[3]); 
             return true;
         }
     }
