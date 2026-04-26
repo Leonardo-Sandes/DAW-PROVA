@@ -85,13 +85,16 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             <?php if ($col[1] == "Multipla" && !empty($col[3])): ?>
                 <strong>Opções:</strong> <?php echo str_replace(";", " - ", $col[3]); ?><br>
             <?php endif; ?>
-
+ 
             <strong>Gabarito:</strong> <?php echo $col[4]; ?><br>
 
             <form method="POST" style="margin-top: 10px;">
                 <input type="hidden" name="id" value="<?php echo $col[0]; ?>">
                 <button type="submit" name="btn_excluir" style="color: red;">Excluir</button>
             </form>
+
+            <a href="editar.php?id=<?php echo $col[0]; ?>" style="margin-left: 10px; text-decoration: none; color: blue;">[ Editar ]</a>
+            <a href="ver_pergunta.php?id=<?php echo $col[0]; ?>" style="margin-left: 10px; text-decoration: none; color: green;">[ Visualizar ]</a>
         </div>
     <?php endforeach; ?>
 
