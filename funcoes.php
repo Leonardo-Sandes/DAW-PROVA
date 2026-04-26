@@ -63,4 +63,35 @@ function realizarLogin($login, $senha) {
     }
     return false;
 }
+
+function buscarPergunta($id_busca) {
+    global $caminho_txt;
+    $linhas = listarPerguntas();
+    foreach ($linhas as $linha) {
+        $dados = explode(" | ", $linha);
+        if ($dados[0] == $id_busca) {
+            return $dados; 
+        }
+    }
+    return null;
+}
+
+function alterarPergunta($id_alterar, $tipo, $pergunta, $opcoes, $gabarito) {
+    global $caminho_txt;
+    $linhas = listarPerguntas();
+    $novas_linhas = "";
+    
+    $pergunta = str_replace("|", "-", $pergunta); 
+    $gabarito = str_replace("|", "-", $gabarito);
+    
+    foreach ($linhas as $linha) {
+        $dados = explode(" | ", $linha);
+        if ($dados[0] == $id_alterar) {
+            $novas_linhas .= "$id_alterar | $tipo | $pergunta | $opcoes | $gabarito" . PHP_EOL;
+        } else {
+            $novas_linhas .= $linha . PHP_EOL;
+        }
+    }
+    return file_put_contents($caminho_txt, $novas_linhas);
+}
 ?>
